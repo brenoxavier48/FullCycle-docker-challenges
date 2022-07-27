@@ -11,8 +11,19 @@ non-functional requirements:
 - The image could not be larger than 2MB.
 
 ## How To Run
+
+The image is already on DockerHub, so you just need to run:
+
 ```
 docker run --rm brenoxavier485/codeeducation
+```
+
+But, if you want to build and run localy, follow the steps bellow
+
+```
+> cd go-challenge
+> docker build -t <desired-image-name> .
+> docker run --rm <desired-image-name>
 ```
 
 
