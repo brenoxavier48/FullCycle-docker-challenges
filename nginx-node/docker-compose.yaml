@@ -10,8 +10,6 @@ services:
       tty: true
       networks:
         - node-network
-      ports: 
-        - "3000:3000"
       depends_on:
         - db
 
@@ -26,6 +24,18 @@ services:
         - MYSQL_ROOT_PASSWORD=root
       networks:
         - node-network
+    
+    nginx:
+      build: ./nginx/
+      container_name: nginx-server
+      restart: unless-stopped
+      tty: true
+      ports:
+        - "8080:80"
+      networks:
+        - node-network
+      depends_on:
+        - app
 
 networks:
   node-network:
