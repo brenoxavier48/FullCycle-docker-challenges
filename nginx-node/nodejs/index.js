@@ -22,7 +22,10 @@ const createTable = (dbConnection) => {
 
 const makeRandomPeopleNameList = () => {
     const randomQuantity = Math.floor(Math.random() * 10) + 1;
-    return Array.from({ length: randomQuantity }, () => faker.name.firstName());
+    return Array.from(
+        { length: randomQuantity },
+        () => faker.name.firstName()
+    );
 }
 
 const makeInsertionPeopleQueryFromNameList = (nameList = []) => {
@@ -32,8 +35,6 @@ const makeInsertionPeopleQueryFromNameList = (nameList = []) => {
     return `INSERT INTO people(name) VALUES ${namesAsValues};`;
 }
 
-const makeSelectQuery = () => 'SELECT * FROM people;'
-
 const insertRandomPeopleIntoPeopleTable = (dbConnection) => {
     const insertionQuery = makeInsertionPeopleQueryFromNameList(
         makeRandomPeopleNameList()
@@ -41,17 +42,15 @@ const insertRandomPeopleIntoPeopleTable = (dbConnection) => {
     dbConnection.query(insertionQuery);
 }
 
+const makeSelectQuery = () => 'SELECT * FROM people;'
+
 const selectPeople = (dbConnection, requestCallback) => {
     const selectQuery = makeSelectQuery();
     dbConnection.query(selectQuery, requestCallback);
 }
 
 const makeHTMLFromNameList = (nameList = []) => {
-    return `
-        <ul>
-            ${nameList.reduce((accumulator, currentValue) => accumulator + `<li><h3>${currentValue.name}</h3></li>`, '')}
-        </ul>
-    `
+    return `<ul>${nameList.reduce((accumulator, currentValue) => accumulator + `<li><h3>${currentValue.name}</h3></li>`, '')}</ul>`
 }
 
 app.listen(3000, () => createTable(createConnection()))
